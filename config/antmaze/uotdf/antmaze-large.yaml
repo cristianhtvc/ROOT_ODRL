@@ -1,0 +1,46 @@
+ac_gradient_clip: 100
+alpha: 0.2
+batch_size: 128
+actor_lr: 0.0003
+critic_lr: 0.0003
+gamma: 0.99
+max_epochs_since_update_decay_interval: 150000.0
+
+state_dim: 17
+action_dim: 3
+hidden_sizes: 256
+max_action: 1
+
+temperature_opt: False
+
+tau: 0.005
+update_interval: 2
+expl_noise: 0.2
+
+eval_episode: 100
+eval_freq: 10000
+start_steps: 5000
+max_step: 500000
+tar_env_interact_freq: 10
+
+device: cuda
+
+lam: 0.9
+temp: 10.0
+
+save_freq: 5000
+
+metric: 'euclidean'   # 计算 Cost 矩阵的度量方式
+epsilon: 0.01         # Sinkhorn 算法的熵正则化系数
+lambda_src: 0.05      # 源域边际分布的惩罚系数 (Source unbalance)
+lambda_tar: 0.5       # 目标域边际分布的惩罚系数 (Target unbalance)
+
+# 数据过滤阈值：
+# 如果设为 0.0，所有的源域数据都会被保留并根据 OT weight 参与训练 (Soft Weighting)
+# 如果设为 >0 (如 0.5 或 1.0)，低于该权重的源域数据将在 mask 中被置为 0，不参与梯度更新 (Hard Filtering)
+filter_threshold: 0.0 
+proportion: 0.25      # 备用参数：如果是按比例保留最高质量数据时使用
+
+# ====== 策略正则化参数 (VAE) ======
+noreg: False          # 是否关闭 VAE 行为克隆正则化 (False 表示开启)
+reg_weight: 0.5       # 正则化强度 (Policy loss 中的 log_beta 惩罚权重)
